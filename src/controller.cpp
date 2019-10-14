@@ -5,17 +5,27 @@
 
 void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
                                  Snake::Direction opposite) const {
+  if (snake.isAIEnabled())
+    snake.setAI(false);
   if (snake.direction != opposite || snake.size == 1) snake.direction = input;
   return;
 }
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(bool &running, Snake &snake, SDL_Point const &food) const {
   SDL_Event e;
+
+  if (snake.isAIEnabled())
+    ControlAI(snake, food);
+
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
+        case SDLK_SPACE:
+          snake.setAI(!snake.isAIEnabled());
+          break;
+
         case SDLK_UP:
           ChangeDirection(snake, Snake::Direction::kUp,
                           Snake::Direction::kDown);
@@ -38,4 +48,9 @@ void Controller::HandleInput(bool &running, Snake &snake) const {
       }
     }
   }
+}
+
+void Controller::ControlAI(Snake &snake, SDL_Point const &food) const
+{
+
 }

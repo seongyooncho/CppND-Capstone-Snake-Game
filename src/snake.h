@@ -18,6 +18,8 @@ class Snake {
 
   void GrowBody();
   bool SnakeCell(int x, int y);
+  bool isAIEnabled() const { return _ai; }
+  void setAI(bool ai);
 
   Direction direction = Direction::kUp;
 
@@ -35,6 +37,7 @@ class Snake {
   bool growing{false};
   int grid_width;
   int grid_height;
+  bool _ai{false};
 };
 
 #endif

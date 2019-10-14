@@ -77,3 +77,12 @@ bool Snake::SnakeCell(int x, int y) {
   }
   return false;
 }
+
+void Snake::setAI(bool ai)
+{
+  _ai = ai;
+  if (_ai)
+    std::cout << "AI turned on" << std::endl;
+  else
+    std::cout << "AI turned off" << std::endl;
+}
