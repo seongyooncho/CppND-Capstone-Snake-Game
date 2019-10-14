@@ -1,12 +1,50 @@
-# CPPND: Capstone Snake Game Example
+# CPPND: Capstone AI Snake Game
 
-This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
+This is based on a starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
 
-<img src="snake_game.gif"/>
+<img src="play.gif"/>
 
-The Capstone Project gives you a chance to integrate what you've learned throughout this program. This project will become an important part of your portfolio to share with current and future colleagues and employers.
+This Snake Game features AI player on top of Capstone Snake Game. You can play normal Snake Game. But once you press the space bar, the AI player will take over your controller. See how good the AI plays. If you want to take control from AI player, you can press space bar again, or just start controlling with arrow keys. AI will give you the full control.
 
-In this project, you can build your own C++ application or extend this Snake game, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
+## Class Structure
+* `Game` Class
+    * AI needs to know where the food is. So In `Game::Run()` function, `controller.HandleInput()` call has been modified to pass `food` as well as `running` and `snake`.
+* `Snake` Class
+    * `bool _ai` private member variable has been added to indicate if the snake is AI enabled or not.
+    * To access private member variabl e`_ai`, `bool isAIEnabled()` and `void setAI(bool ai)` has been added. When switching `_ai`, debugging messages are printed to console.
+    * AI in `Controller` class needs to know `grid_width` and `grid_height`, which is a private member variable. So getter for those items, `int getGridWidth()` and `int getGridHeight()`, are added.
+* `Renderer` Class
+    * In `Render()` function, the color of snake head is changed to Pink, `#CC006D`, when AI is enabled.
+* `Controller` Class
+    * `HandleInput()`
+      * This function has been modified to receive `food`. Since the AI needs to know where the food is to decide next move.
+      * If AI is enabled, it calls `ControlAI()` to control with AI.
+      * If space bar has entered, it toggles AI.
+      * If there is user input, arrow keys, it disables AI.
+    * `void ControlAI()`
+        * This function sets direction of snake for next move.
+        * It tests current direction with `TestMove()` function. If it is okay, then AI does nothing. Otherwise, it tests left and right move respectively and choose from the result.
+    * `bool TestMove()`
+        * With the given direction, it estimates next position and see if it collides.
+        * It returns false if it collides. Otherwise, it continues calculating distance between food.
+        * If the distance between food gets closer, it returns true. If not, it returns false.
+
+## Rubrics
+* Loops, Functions, I/O
+    * The project demonstrates an understanding of C++ functions and control structures.
+        * `Controller::ControlAI()` uses `switch-case` control structures.
+    * The project accepts user input and processes the input.
+        * `Controller::HandleInput()` accepts user input space bar, and process it to toggle AI mode.
+* Object Oriented Programming
+    * The project uses Object Oriented Programming techniques.
+        * Class attributes and class methods of `Snake` and `Controller` classes are modified and newly defined.
+    * Classes use appropriate access specifiers for class members.
+        * `Controller::ControlAI()` and `Controller::TestMove()` functions are only used in `Controller` object. So it is defined private.
+    * Classes encapsulate behavior.
+        * To access `_ai` from `Snake`, `bool isAIEnabled()` and  `void setAI(bool ai)` has been added.
+* Memory Management
+    * The project makes use of references in function declarations.
+        * Newly defined functions `Controller::ControlAI()` and `Controller::TestMove()` takes advantage of pass-by-refence.
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
