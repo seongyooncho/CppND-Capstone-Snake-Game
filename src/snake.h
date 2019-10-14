@@ -20,6 +20,8 @@ class Snake {
   bool SnakeCell(int x, int y);
   bool isAIEnabled() const { return _ai; }
   void setAI(bool ai);
+  int getGridWidth() const { return grid_width; }
+  int getGridHeight() const { return grid_height; }
 
   Direction direction = Direction::kUp;
 
