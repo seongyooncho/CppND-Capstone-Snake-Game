@@ -9,11 +9,11 @@ void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
   return;
 }
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(ControllerStatus &running, Snake &snake) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
-      running = false;
+      running = ControllerStatus::quit;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
         case SDLK_UP:
