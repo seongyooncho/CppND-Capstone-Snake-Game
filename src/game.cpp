@@ -17,9 +17,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_end;
   Uint32 frame_duration;
   int frame_count = 0;
-  ControllerStatus running = ControllerStatus::player;
+  bool running = true;
 
-  while (running != ControllerStatus::quit) {
+  while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
